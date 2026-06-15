@@ -12,7 +12,7 @@ public class ShopManager : MonoBehaviour
     UnityMainThreadDispatcher dispatcher;
 
     [Header("Firebase")]
-    [SerializeField] string databaseUrl = "https://myproject-76240-default-rtdb.asia-southeast1.firebasedatabase.app/";
+    [SerializeField] string databaseUrl = "https://shingutest-68112-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
     [Header("UI")]
     [SerializeField] Text CoinText;
@@ -20,7 +20,7 @@ public class ShopManager : MonoBehaviour
 
     string userKey;
     int currentCoin;
-    Dictionary<string, int> inventory = new Dictionary<string, int>();
+    //Dictionary<string, int> inventory = new Dictionary<string, int>();
 
     void Start()
     {
@@ -61,7 +61,7 @@ public class ShopManager : MonoBehaviour
                 currentCoin = int.Parse(snapshot.Child("Coin").Value.ToString());
 
                 string inventoryJson = snapshot.Child("Inventory").Value.ToString();
-                inventory = JsonConvert.DeserializeObject<Dictionary<string, int>>(inventoryJson);
+                InventoryManager.Instance.inventory = JsonConvert.DeserializeObject<Dictionary<string, int>>(inventoryJson);
 
                 dispatcher.Enqueue(() =>
                 {
@@ -74,48 +74,50 @@ public class ShopManager : MonoBehaviour
     void RefreshUI()
     {
         CoinText.text = "Coin : " + currentCoin;
+        InventoryManager.Instance.RefreshUI();
     }
 
-    public void OnClickBuyPotion()
+    public void OnClickBuyDrink()
     {
-        BuyItem("Potion", 100);
+        BuyItem("Drink", 200);
     }
 
-    public void OnClickBuyBomb()
+    public void OnClickBuyCookie()
     {
-        BuyItem("Bomb", 200);
+        BuyItem("Cookie", 300);
     }
 
-    public void OnClickBuyTicket()
+    public void OnClickBuyJelly()
     {
-        BuyItem("Ticket", 300);
+        BuyItem("Jelly", 100);
     }
 
     void BuyItem(string itemName, int price)
     {
         if (currentCoin < price)
         {
-            MessageText.text = "코인이 부족합니다.";
+            MessageText.text = $"[{itemName} 가격: {price}] 코인이 부족합니다.";
             return;
         }
 
         currentCoin -= price;
 
-        if (inventory.ContainsKey(itemName))
+        if (InventoryManager.Instance.inventory.ContainsKey(itemName))
         {
-            inventory[itemName]++;
+            InventoryManager.Instance.inventory[itemName]++;
         }
         else
         {
-            inventory[itemName] = 1;
+            InventoryManager.Instance.inventory[itemName] = 1;
         }
 
+        RefreshUI();
         SaveUserData(itemName);
     }
 
     void SaveUserData(string boughtItemName)
     {
-        string inventoryJson = JsonConvert.SerializeObject(inventory);
+        string inventoryJson = JsonConvert.SerializeObject(InventoryManager.Instance.inventory);
 
         Dictionary<string, object> updateData = new Dictionary<string, object>();
         updateData["Coin"] = currentCoin;
