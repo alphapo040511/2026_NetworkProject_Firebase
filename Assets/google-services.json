@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "443016773532",
+    "firebase_url": "https://shingutest-68112-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "shingutest-68112",
+    "storage_bucket": "shingutest-68112.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443016773532:android:2009015066b580a3989259",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.Unity_Multyplayer_Server_3D_"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAohcQghiC4k2Q6jWiWV5ODGzISJhFfQ14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
