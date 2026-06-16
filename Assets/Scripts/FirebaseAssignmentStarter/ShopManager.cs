@@ -144,4 +144,13 @@ public class ShopManager : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
     }
+
+    public void Logout()
+    {
+        PlayerPrefs.DeleteKey("UserKey");
+        PlayerPrefs.DeleteKey("UserNickName");
+        PlayerPrefs.Save();
+
+        SceneManager.LoadScene("LoginScene");
+    }
 }
