@@ -152,6 +152,8 @@ public class MarketManager : MonoBehaviour
             .Child(listingKey)
             .RemoveValueAsync();
 
+        messageText.text = $"{marketData.ItemName} 구매 완료";
+
         RefreshMarket();
     }
 
