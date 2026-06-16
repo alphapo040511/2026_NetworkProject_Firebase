@@ -8,10 +8,9 @@ public class UserData
     public int Coin;
     public int Score;
 
-    // Dictionary는 JsonUtility로 바로 저장하기 어렵기 때문에
-    // Newtonsoft.Json으로 JSON 문자열로 변환해서 저장한다.
     public string UnitList;
-    public string Inventory;
+
+    public Dictionary<string, int> Inventory;
 
     public UserData()
     {
@@ -23,7 +22,9 @@ public class UserData
         Coin = 500;
         Score = 0;
 
-        Dictionary<string, bool> unitList = new Dictionary<string, bool>();
+        Dictionary<string, bool> unitList =
+            new Dictionary<string, bool>();
+
         unitList["Unit1"] = true;
 
         for (int i = 2; i <= 6; i++)
@@ -31,12 +32,13 @@ public class UserData
             unitList["Unit" + i] = false;
         }
 
-        Dictionary<string, int> inventory = new Dictionary<string, int>();
-        inventory["Drink"] = 0;
-        inventory["Cookie"] = 0;
-        inventory["Jelly"] = 0;
+        Inventory =
+            new Dictionary<string, int>();
+
+        Inventory["Drink"] = 0;
+        Inventory["Cookie"] = 0;
+        Inventory["Jelly"] = 0;
 
         UnitList = JsonConvert.SerializeObject(unitList);
-        Inventory = JsonConvert.SerializeObject(inventory);
     }
 }
