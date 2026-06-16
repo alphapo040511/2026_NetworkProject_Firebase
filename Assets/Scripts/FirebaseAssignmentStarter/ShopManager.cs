@@ -10,10 +10,6 @@ public class ShopManager : MonoBehaviour
     [SerializeField] Text CoinText;
     [SerializeField] Text MessageText;
 
-    [SerializeField] Text Unit_2_Text;
-    [SerializeField] Text Unit_3_Text;
-    [SerializeField] Text Unit_4_Text;
-
     private void Start()
     {
         if (UserDataManager.Instance.IsLoaded)
@@ -95,10 +91,11 @@ public class ShopManager : MonoBehaviour
             itemName + " 구매 완료";
     }
 
-    public void BuyUnit(string unitName, int price)
+    public void BuyUnit(string unitName)
     {
-        UserData userData =
-            UserDataManager.Instance.CurrentUserData;
+        int price = 100;
+
+        UserData userData = UserDataManager.Instance.CurrentUserData;
 
         Dictionary<string, bool> unitList =
             JsonConvert.DeserializeObject

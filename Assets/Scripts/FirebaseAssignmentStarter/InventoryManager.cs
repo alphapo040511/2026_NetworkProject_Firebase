@@ -1,3 +1,6 @@
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +13,9 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] Text CookieCountText;
     [SerializeField] Text JellyCountText;
     [SerializeField] Text MessageText;
+    [SerializeField] Text Unit_2_Text;
+    [SerializeField] Text Unit_3_Text;
+    [SerializeField] Text Unit_4_Text;
 
     private void Awake()
     {
@@ -38,14 +44,34 @@ public class InventoryManager : MonoBehaviour
 
     public void RefreshUI()
     {
-        DrinkCountText.text =
-            "Drink : " + GetItemCount("Drink");
+        DrinkCountText.text = "Drink : " + GetItemCount("Drink");
 
-        CookieCountText.text =
-            "Cookie : " + GetItemCount("Cookie");
+        CookieCountText.text = "Cookie : " + GetItemCount("Cookie");
 
-        JellyCountText.text =
-            "Jelly : " + GetItemCount("Jelly");
+        JellyCountText.text = "Jelly : " + GetItemCount("Jelly");
+
+        CheckUnit("Unit2", Unit_2_Text);
+        CheckUnit("Unit3", Unit_3_Text);
+        CheckUnit("Unit4", Unit_4_Text);
+    }
+
+    void CheckUnit(string unitName, Text text)
+    {
+        UserData userData = UserDataManager.Instance.CurrentUserData;
+
+        Dictionary<string, bool> unitList =
+            JsonConvert.DeserializeObject
+            <Dictionary<string, bool>>
+            (userData.UnitList);
+
+        if(unitList.ContainsKey(unitName) && unitList[unitName])
+        {
+            text.text = unitName + " 보유중";
+        }
+        else
+        {
+            text.text = unitName + " 보유하지 않음";
+        }
     }
 
     int GetItemCount(string itemName)
