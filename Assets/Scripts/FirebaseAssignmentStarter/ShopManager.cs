@@ -6,9 +6,16 @@ using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
+    public static ShopManager Instance;
+
     [Header("UI")]
     [SerializeField] Text CoinText;
     [SerializeField] Text MessageText;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -30,7 +37,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    void RefreshUI()
+    public void RefreshUI()
     {
         CoinText.text =
             "Coin : " +
